@@ -13,6 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
 class VehicleAdmin(admin.ModelAdmin):
     list_display = ['owner_name', 'vehicle_model', 'plate', 'vin']
     list_filter = ['owner_name', 'vehicle_model']
+    search_fields = ['plate', 'vin']
 
 
 class ServiceAdmin(admin.ModelAdmin):
