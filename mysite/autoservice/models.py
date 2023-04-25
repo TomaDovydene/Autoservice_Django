@@ -8,6 +8,10 @@ class VehicleModel(models.Model):
     def __str__(self):
         return f"{self.make} {self.model}"
 
+    class Meta:
+        verbose_name = "Automobilio modelis"
+        verbose_name_plural = "Automobilio modeliai"
+
 
 class Vehicle(models.Model):
     plate = models.CharField(verbose_name="Valstybinis numeris", max_length=100)
@@ -21,6 +25,10 @@ class Vehicle(models.Model):
     def __str__(self):
         return f"{self.vehicle_model} ({self.plate})"
 
+    class Meta:
+        verbose_name = "Automobilis"
+        verbose_name_plural = "Automobiliai"
+
 
 class Service(models.Model):
     name = models.CharField(verbose_name="Pavadinimas", max_length=100)
@@ -28,6 +36,10 @@ class Service(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        verbose_name = "Paslauga"
+        verbose_name_plural = "Paslaugos"
 
 
 class Order(models.Model):
@@ -38,6 +50,10 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.vehicle} ({self.date})"
 
+    class Meta:
+        verbose_name = "Užsakymas"
+        verbose_name_plural = "Užsakymai"
+
 
 class OrderLine(models.Model):
     order = models.ForeignKey(to="Order", on_delete=models.CASCADE)
@@ -46,4 +62,8 @@ class OrderLine(models.Model):
 
     def __str__(self):
         return f"{self.order.vehicle} ({self.order.date}): {self.service} - {self.quantity}"
+
+    class Meta:
+        verbose_name = "Užsakymo eilutė"
+        verbose_name_plural = "Užsakymo eilutės"
 
