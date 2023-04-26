@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block "title" %}Pradžia{% endblock%}
+
+{% block "content" %}
+
+<h1>Sveki atvykę į autoserviso puslapį!</h1>
+<p>Statistika:</p>
+<ul>
+    <li><strong>Paslaugų kiekis: </strong>{{ num_service }}</li>
+    <li><strong>Atliktų užsakymų kiekis: </strong>{{ num_order }}</li>
+    <li><strong>Automobilių kiekis: </strong>{{ num_vehicle }}</li>
+</ul>
+
+{% endblock%}
