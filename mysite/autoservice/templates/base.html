@@ -12,6 +12,8 @@
     background: #aaa;
   }
   </style>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 
@@ -40,6 +42,13 @@
     </ul>
   </div>
 </nav>
+
+<ul class="sidebar-nav">
+  <li><a href="{% url 'index' %}">Pradžia</a></li>
+  <li><a href="">Visi automobiliai</a></li>
+  <li><a href="">Visi savininkai</a></li>
+</ul>
+
 <div class="container">
   {% block "content" %}{% endblock%}
 </div>
