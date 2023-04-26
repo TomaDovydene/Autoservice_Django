@@ -54,6 +54,22 @@ class Order(models.Model):
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
 
+    # LOAN_STATUS = (
+    #     ('p', ('Confirmed')),
+    #     ('v', ('In progress')),
+    #     ('a', ('Canceled')),
+    #     ('b', ('Done'))
+    # )
+    #
+    # status = models.CharField(
+    #     verbose_name='Būsena',
+    #     max_length=1,
+    #     choices=LOAN_STATUS,
+    #     blank=True,
+    #     default='p',
+    #     help_text='Status'
+    # )
+
 
 class OrderLine(models.Model):
     order = models.ForeignKey(to="Order", on_delete=models.CASCADE)
