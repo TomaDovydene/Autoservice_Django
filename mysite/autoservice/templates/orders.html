@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block "title" %}Užsakymai{% endblock%}
+
+{% block "content" %}
+<h1>Užsakymai</h1>
+<p>Užsakymų sąrašas</p>
+{% for order in orders %}
+    <p>{{ order }}</p>
+<hr>
+
+{% endfor %}
+{% endblock%}
