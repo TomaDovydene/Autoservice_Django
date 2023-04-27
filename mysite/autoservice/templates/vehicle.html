@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block "title" %}Automobilis{% endblock%}
+
+{% block "content" %}
+<h1>Automobilis:</h1>
+<ul>
+    <li><strong>Savininkas: </strong>{{ vehicle.owner_name}}</li>
+    <li><strong>Automobilio modelis: </strong>{{ vehicle.vehicle_model}}</li>
+    <li><strong>Valstybinis numeris: </strong>{{ vehicle.plate}}</li>
+    <li><strong>VIN kodas: </strong>{{ vehicle.vin}}</li>
+</ul>
+<hr>
+
+{% endblock%}

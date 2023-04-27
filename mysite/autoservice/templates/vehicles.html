@@ -3,9 +3,12 @@
 {% block "title" %}Automobiliai{% endblock%}
 
 {% block "content" %}
+<h1>Automobiliai</h1>
+<p>Autoservise buvusių automobilių sąrašas</p>
 {% for vehicle in vehicles %}
-
-<p>{{ vehicle.vehicle_model }}</p>
+<a href="{% url 'vehicle' vehicle.id %}">
+    <p>{{ vehicle.vehicle_model }}</p>
+</a>
 <hr>
 
 {% endfor %}
