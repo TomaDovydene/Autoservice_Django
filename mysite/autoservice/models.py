@@ -47,6 +47,22 @@ class Order(models.Model):
     vehicle = models.ForeignKey(to="Vehicle", verbose_name="Automobilis", on_delete=models.CASCADE)
     suma = models.CharField(verbose_name="Suma", max_length=100)
 
+    LOAN_STATUS = (
+        ('p', ('Patvirtinta')),
+        ('v', ('Vykdoma')),
+        ('a', ('Atšaukta')),
+        ('i', ('Įvykdyta'))
+    )
+
+    status = models.CharField(
+        verbose_name='Būsena',
+        max_length=1,
+        choices=LOAN_STATUS,
+        blank=True,
+        default='v',
+        help_text='Status'
+    )
+
     def __str__(self):
         return f"{self.vehicle} ({self.date})"
 
@@ -54,21 +70,6 @@ class Order(models.Model):
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
 
-    # LOAN_STATUS = (
-    #     ('p', ('Confirmed')),
-    #     ('v', ('In progress')),
-    #     ('a', ('Canceled')),
-    #     ('b', ('Done'))
-    # )
-    #
-    # status = models.CharField(
-    #     verbose_name='Būsena',
-    #     max_length=1,
-    #     choices=LOAN_STATUS,
-    #     blank=True,
-    #     default='p',
-    #     help_text='Status'
-    # )
 
 
 class OrderLine(models.Model):
