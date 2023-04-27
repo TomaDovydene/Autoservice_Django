@@ -6,7 +6,9 @@
 <h1>Užsakymai</h1>
 <p>Užsakymų sąrašas</p>
 {% for order in orders %}
+<a href="{{ order.id }}">
     <p>{{ order }}</p>
+</a>
 <hr>
 
 {% endfor %}
