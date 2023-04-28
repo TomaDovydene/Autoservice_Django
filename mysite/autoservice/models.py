@@ -45,7 +45,6 @@ class Service(models.Model):
 class Order(models.Model):
     date = models.DateTimeField(verbose_name="Data", auto_now_add=True)
     vehicle = models.ForeignKey(to="Vehicle", verbose_name="Automobilis", on_delete=models.CASCADE)
-    suma = models.CharField(verbose_name="Suma", max_length=100)
 
     LOAN_STATUS = (
         ('p', ('Patvirtinta')),
@@ -66,6 +65,13 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.vehicle} ({self.date})"
 
+    def total(self):
+        total = 0
+        orderlines = self.orderlines.all()
+        for orderline in orderlines:
+            total += orderline.sum()
+        return total
+
     class Meta:
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
@@ -80,7 +86,11 @@ class OrderLine(models.Model):
     def __str__(self):
         return f"{self.order.vehicle} ({self.order.date}): {self.service} - {self.quantity}"
 
+    def sum(self):
+        return self.service.price * self.quantity
+
     class Meta:
         verbose_name = "Užsakymo eilutė"
         verbose_name_plural = "Užsakymo eilutės"
+
 

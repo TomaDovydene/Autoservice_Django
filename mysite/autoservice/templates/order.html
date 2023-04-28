@@ -5,16 +5,18 @@
 {% block "content" %}
 <h1>{{ order.title }}</h1>
 <ul>
-    <li><strong>Automobilis: </strong>{{ order.vehicle}}</li>
-    <li><strong>Užsakymo data: </strong>{{ order.date}}</li>
-    <li><strong>Užsakymo suma: </strong>{{ order.suma}}</li>
+    <li><strong>Automobilis: </strong>{{ order.vehicle }}</li>
+    <li><strong>Užsakymo data: </strong>{{ order.date }}</li>
+    <li><strong>Užsakymo suma: </strong>{{ order.suma }}</li>
 </ul>
 <hr>
 <h2>Užsakymų eilutes:</h2>
 <ul>
     {% for orderline in order.orderlines.all %}
-    <li>{{ orderline }}</li>
+    <li>{{ orderline.service}} ({{ orderline.service.price}}) - {{ orderline.quantity}}: {{ orderline.sum}}</li>
     {% endfor %}
 </ul>
+<hr>
+<p><strong>Bendra suma: </strong>{{ order.total }}</p>
 
 {% endblock%}
