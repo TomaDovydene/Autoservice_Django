@@ -47,10 +47,10 @@ class Order(models.Model):
     vehicle = models.ForeignKey(to="Vehicle", verbose_name="Automobilis", on_delete=models.CASCADE)
 
     LOAN_STATUS = (
-        ('p', ('Patvirtinta')),
-        ('v', ('Vykdoma')),
-        ('a', ('Atšaukta')),
-        ('i', ('Įvykdyta'))
+        ('p', 'Patvirtinta'),
+        ('v', 'Vykdoma'),
+        ('a', 'Atšaukta'),
+        ('i', 'Įvykdyta')
     )
 
     status = models.CharField(
@@ -63,7 +63,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"{self.vehicle} ({self.date})"
+        return f"{self.vehicle} ({self.date}) - {self.status}"
 
     def total(self):
         total = 0
