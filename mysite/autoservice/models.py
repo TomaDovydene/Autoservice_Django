@@ -21,6 +21,7 @@ class Vehicle(models.Model):
                                       null=True)
     vin = models.CharField(verbose_name="VIN kodas", max_length=100)
     owner_name = models.CharField(verbose_name="Savininkas", max_length=100)
+    cover = models.ImageField('Vaizdas', upload_to='covers', null=True)
 
     def __str__(self):
         return f"{self.vehicle_model} ({self.plate})"
