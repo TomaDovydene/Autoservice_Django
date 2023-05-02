@@ -3,7 +3,12 @@
 {% block "title" %}Automobilis{% endblock%}
 
 {% block "content" %}
+
 <h1>Automobilis:</h1>
+
+{% load static %}
+<img src="{{ vehicle.cover.url }}" style="margin-bottom: 20px; max-width: 20%">
+
 <ul>
     <li><strong>Savininkas: </strong>{{ vehicle.owner_name}}</li>
     <li><strong>Automobilio modelis: </strong>{{ vehicle.vehicle_model}}</li>

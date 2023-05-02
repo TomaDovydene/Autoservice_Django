@@ -3,15 +3,39 @@
 {% block "title" %}Automobiliai{% endblock%}
 
 {% block "content" %}
-<h1>Automobiliai</h1>
-<p>Autoservise buvusių automobilių sąrašas</p>
-{% for vehicle in vehicles %}
-<a href="{% url 'vehicle' vehicle.id %}">
-    <p>{{ vehicle.vehicle_model }}</p>
-</a>
-<hr>
+<!--<h1>Automobiliai</h1>-->
+<!--<p>Autoservise buvusių automobilių sąrašas</p>-->
+<!--{% for vehicle in vehicles %}-->
+<!--<a href="{% url 'vehicle' vehicle.id %}">-->
+<!--    <p>{{ vehicle.vehicle_model }}</p>-->
+<!--</a>-->
+<!--<hr>-->
 
-{% endfor %}
+<!--{% endfor %}-->
+
+{% load static %}
+    <h1>Automobilių sąrašas</h1></br>
+    {% if vehicles %}
+    <div class="row">
+      {% for vehicle in vehicles %}
+        <div class="col-md-4 d-flex align-items-stretch">
+          <div class="card mb-4 shadow-sm">
+            {% if vehicle.cover %}
+              <img src="{{ vehicle.cover.url }}" class="card-img-top" alt="...">
+            {% else %}
+              <img src="{% static 'img/no-image.png' %}" class="card-img-top">
+            {% endif %}
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">{{ vehicle.vehicle_model }}</h6>
+              <p class="card-text"><a href="{{ vehicle.id }}">{{ vehicle.plate }}</a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <p>Autoservise nėra automobilių.</p>
+    {% endif %}
 
 <div class="container puslapiai">
     <nav aria-label="...">
