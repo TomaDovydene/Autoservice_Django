@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from datetime import date
+
 
 # Create your models here.
 class VehicleModel(models.Model):
@@ -21,7 +24,7 @@ class Vehicle(models.Model):
                                       null=True)
     vin = models.CharField(verbose_name="VIN kodas", max_length=100)
     owner_name = models.CharField(verbose_name="Savininkas", max_length=100)
-    cover = models.ImageField('Vaizdas', upload_to='covers', null=True)
+    cover = models.ImageField('Vaizdas', upload_to='covers', null=True, blank=True)
 
     def __str__(self):
         return f"{self.vehicle_model} ({self.plate})"
@@ -46,6 +49,8 @@ class Service(models.Model):
 class Order(models.Model):
     date = models.DateTimeField(verbose_name="Data", auto_now_add=True)
     vehicle = models.ForeignKey(to="Vehicle", verbose_name="Automobilis", on_delete=models.CASCADE)
+    client = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=True)
+    due_back = models.DateTimeField(verbose_name="Bus sutvarkyta", null=True, blank=True)
 
     LOAN_STATUS = (
         ('p', 'Patvirtinta'),
@@ -65,6 +70,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.vehicle} ({self.date}) - {self.status}"
+
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
     def total(self):
         total = 0

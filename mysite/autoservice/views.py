@@ -4,6 +4,7 @@ from . models import Service, Order, Vehicle
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -64,4 +65,10 @@ class OrderDetailView(generic.DetailView):
     context_object_name = "order"
     template_name = "order.html"
 
+class ClientOrdersListView(LoginRequiredMixin, generic.ListView):
+    model = Order
+    template_name = "my_orders.html"
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user).order_by('due_back')
 
