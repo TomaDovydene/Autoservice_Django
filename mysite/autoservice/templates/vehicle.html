@@ -7,7 +7,11 @@
 <h1>Automobilis:</h1>
 
 {% load static %}
-<img src="{{ vehicle.cover.url }}" style="margin-bottom: 20px; max-width: 20%">
+{% if vehicle.cover %}
+    <img src="{{ vehicle.cover.url }}" style="margin-bottom: 20px; max-width: 20%">
+{% else %}
+    <img src="{% static 'img/no-image.png' %}" class="card-img-top" width="5" height="auto">
+{% endif %}
 
 <ul>
     <li><strong>Savininkas: </strong>{{ vehicle.owner_name}}</li>
