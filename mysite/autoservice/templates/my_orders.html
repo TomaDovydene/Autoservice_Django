@@ -10,7 +10,9 @@
 
       {% for order in orders %}
       <li class="{% if order.is_overdue %}text-danger{% endif %}">
-          <span style="color:black;"> {{ order.vehicle.vehicle_model }} - <a href="{% url 'order' order.pk %}">{{ order.vehicle.plate }}</a> </span>({{ order.due_back|date:"Y-m-d, f:m" }} val)
+          <p><span style="color:black;"> {{ order.vehicle.vehicle_model }} - <a href="{% url 'order' order.pk %}">{{ order.vehicle.plate }}.
+          </a> {{ order.get_status_display }}
+          </span>({{ order.due_back|date:"Y-m-d, f:m" }} val)</p>
       </li>
       {% endfor %}
     </ol>
