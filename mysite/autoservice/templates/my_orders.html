@@ -6,14 +6,14 @@
     <h1>Mano užsakymai</h1>
 
     {% if orders %}
-    <ul>
+    <ol>
 
       {% for order in orders %}
       <li class="{% if order.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order' order.pk %}">{{ order.order.plate }}</a> ({{ order.due_back }})
+          <span style="color:black;"> {{ order.vehicle.vehicle_model }} - <a href="{% url 'order' order.pk %}">{{ order.vehicle.plate }}</a> </span>({{ order.due_back|date:"Y-m-d, f:m" }} val)
       </li>
       {% endfor %}
-    </ul>
+    </ol>
 
     {% else %}
       <p>Šiuo metu jūs neturite užsakymų.</p>

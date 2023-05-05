@@ -6,8 +6,8 @@
 <h1>{{ order.title }}</h1>
 <ul>
     <li><strong>Automobilis: </strong>{{ order.vehicle }}</li>
-    <li><strong>Užsakymo data: </strong>{{ order.date }}</li>
-    <li><strong>Bus sutvarkyta: </strong>{{ order.due_back}}</li>
+    <li><strong>Užsakymo data: </strong>{{ order.date|date:"Y-m-d, f:m" }} val</li>
+    <li><strong>Bus sutvarkyta: </strong>{{ order.due_back|date:"Y-m-d, f:m" }} val</li>
     {% if order.status == 'i' %}
     <li><b>Užsakymo būsena: </b> <b class="text-success"> {{ order.get_status_display }} </b></li>
     {% elif order.status == 'a' %}
