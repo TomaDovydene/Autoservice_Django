@@ -3,13 +3,77 @@
 {% block "title" %}Užsakymai{% endblock%}
 
 {% block "content" %}
+<h1>Užsakymų sąrašas</h1>
+<table style="border: 1px solid black; border-collapse: collapse;">
+    <thead>
+      <tr style="border: 1px solid black;">
+        <th style="border: 1px solid black; background-color: #6495ED; padding: 8px;">Nuotrauka</th>
+        <th style="border: 1px solid black; background-color: #6495ED; padding: 8px;">Užsakovas</th>
+        <th style="border: 1px solid black; background-color: #6495ED; padding: 8px;">Auto savininkas</th>
+        <th style="border: 1px solid black; background-color: #6495ED; padding: 8px;">Auto modelis</th>
+        <th style="border: 1px solid black; background-color: #6495ED; padding: 8px;">Valstyb. Nr.</th>
+        <th style="border: 1px solid black; background-color: #6495ED; padding: 8px;">Būsena</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% load static%}
+      {% for order in orders %}
+        <tr style="border: 1px solid black;">
+          <td style="border: 1px solid black; padding: 8px;"><img scr="{% static 'media/covers/car_1.png' %}" alt="Cover"></td>
+          <td style="border: 1px solid black; padding: 8px;">{{ order.client }}</td>
+          <td style="border: 1px solid black; padding: 8px;">{{ order.vehicle.owner_name }}</td>
+          <td style="border: 1px solid black; padding: 8px;">{{ order.vehicle.vehicle_model }}</td>
+          <td style="border: 1px solid black; padding: 8px;">{{ order.vehicle.plate }}</td>
+          <td style="border: 1px solid black; padding: 8px;"><a href="{{ order.id }}">
+            {% if order.status == 'i' %}
+                <b class="text-success"> {{ order.get_status_display }} </b>
+                {% elif order.status == 'a' %}
+                <b class="text-danger"> {{ order.get_status_display }} </b>
+                {% else %}
+                <b class="text-warning"> {{ order.get_status_display }} </b>
+            {% endif %}</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pirmas</a>
+            <a href="?page={{ page_obj.previous_page_number }}">atgal</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">pirmyn</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">paskutinis &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock%}
+
+
+
+
+
+{% comment %}
+
+{% extends "base.html" %}
+
+{% block "title" %}Užsakymai{% endblock%}
+
+{% block "content" %}
 <h1>Užsakymai</h1>
 <p>Užsakymų sąrašas</p>
 {% for order in orders %}
 <a href="{{ order.id }}">
-    <p>{{ order }}</p>
+    <p>{{ order.vehicle.cover }} - {{ order.client }} - {{ order.vehicle.owner_name }} - {{ order.vehicle.vehicle_model }} - {{ order.vehicle.plate }}</p>
 </a>
-<hr>
 
 {% endfor %}
 
@@ -32,3 +96,5 @@
 </div>
 
 {% endblock%}
+
+{% endcomment %}
