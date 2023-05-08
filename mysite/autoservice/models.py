@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 # from datetime import date
 from datetime import *
 import pytz
+
 utc = pytz.UTC
 from tinymce.models import HTMLField
 
@@ -54,7 +55,7 @@ class Service(models.Model):
 class Order(models.Model):
     date = models.DateTimeField(verbose_name="Data", auto_now_add=True)
     vehicle = models.ForeignKey(to="Vehicle", verbose_name="Automobilis", on_delete=models.CASCADE)
-    client = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=True)
+    client = models.ForeignKey(to=User, verbose_name="Klientas", on_delete=models.SET_NULL, null=True, blank=True)
     due_back = models.DateTimeField(verbose_name="Bus sutvarkyta", null=True, blank=True)
 
     LOAN_STATUS = (
@@ -93,7 +94,6 @@ class Order(models.Model):
         verbose_name_plural = "Užsakymai"
 
 
-
 class OrderLine(models.Model):
     order = models.ForeignKey(to="Order", on_delete=models.CASCADE, related_name="orderlines")
     service = models.ForeignKey(to="Service", verbose_name="Paslauga", on_delete=models.SET_NULL, null=True)
@@ -108,5 +108,3 @@ class OrderLine(models.Model):
     class Meta:
         verbose_name = "Užsakymo eilutė"
         verbose_name_plural = "Užsakymo eilutės"
-
-

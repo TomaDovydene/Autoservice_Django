@@ -16,10 +16,10 @@
       </tr>
     </thead>
     <tbody>
-    {% load static%}
+    {% load static %}
       {% for order in orders %}
         <tr style="border: 1px solid black;">
-          <td style="border: 1px solid black; padding: 8px;"><img scr="{% static 'media/covers/car_1.png' %}" alt="Cover"></td>
+          <td style="border: 1px solid black; padding: 8px;"><img scr="{% static order.vehicle.cover.url %}" alt="Nuotrauka nerodoma"></td>
           <td style="border: 1px solid black; padding: 8px;">{{ order.client }}</td>
           <td style="border: 1px solid black; padding: 8px;">{{ order.vehicle.owner_name }}</td>
           <td style="border: 1px solid black; padding: 8px;">{{ order.vehicle.vehicle_model }}</td>

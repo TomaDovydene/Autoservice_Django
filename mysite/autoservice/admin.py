@@ -8,6 +8,7 @@ class OrderLineInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['vehicle', 'date', 'status', 'client', 'due_back']
     inlines = [OrderLineInline]
+    list_editable = ['client', 'due_back']
 
 
 class VehicleAdmin(admin.ModelAdmin):
