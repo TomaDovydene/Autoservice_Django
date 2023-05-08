@@ -25,6 +25,16 @@
 </ul>
 <hr>
 <p><strong>Bendra suma: </strong>{{ order.total }} $</p>
-
+<br>
+  <h4>Atsiliepimai:</h4>
+  {% if order.reviews.all %}
+    {% for review in order.reviews.all %}
+      <hr>
+      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Užsakymas neturi atsiliepimų</p>
+  {% endif %}
 
 {% endblock%}
