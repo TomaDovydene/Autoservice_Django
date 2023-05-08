@@ -26,7 +26,20 @@
 <hr>
 <p><strong>Bendra suma: </strong>{{ order.total }} $</p>
 <br>
-  <h4>Atsiliepimai:</h4>
+  <h4>Atsiliepimai</h4>
+
+  {% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h6>Palikite atsiliepimą:</h6>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.content }}<br>
+      <input type="submit" value="Išsaugoti">
+    </form>
+  </div>
+  {% endif %}
+
   {% if order.reviews.all %}
     {% for review in order.reviews.all %}
       <hr>
