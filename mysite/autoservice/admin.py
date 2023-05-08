@@ -24,9 +24,14 @@ class ServiceAdmin(admin.ModelAdmin):
 class OrderLineAdmin(admin.ModelAdmin):
     list_display = ['order', 'service', 'quantity']
 
+
+class OrderReviewAdmin(admin.ModelAdmin):
+    list_display = ('order', 'date_created', 'reviewer', 'content')
+
 # Register your models here.
 admin.site.register(models.VehicleModel)
 admin.site.register(models.Vehicle, VehicleAdmin)
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.OrderLine, OrderLineAdmin)
 admin.site.register(models.Service, ServiceAdmin)
+admin.site.register(models.OrderReview, OrderReviewAdmin)

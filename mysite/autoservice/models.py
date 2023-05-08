@@ -108,3 +108,15 @@ class OrderLine(models.Model):
     class Meta:
         verbose_name = "Užsakymo eilutė"
         verbose_name_plural = "Užsakymo eilutės"
+
+
+class OrderReview(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField('Atsiliepimas', max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']
