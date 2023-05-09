@@ -5,6 +5,12 @@
 {% block "content" %}
 <h1>{{ order.title }}</h1>
 <ul>
+    {% if order.vehicle.cover %}
+    <img src="{{ order.vehicle.cover.url }}" style="margin-bottom: 20px; max-width: 20%">
+    {% else %}
+    {% load static %}
+    <img src="{% static 'img/no-image.png' %}" class="card-img-top" style="width:200px;height:200px;">
+    {% endif %}
     <li><strong>Automobilis: </strong>{{ order.vehicle }}</li>
     <li><strong>Užsakymo data: </strong>{{ order.date|date:"Y-m-d, f:m" }} val</li>
     <li><strong>Bus sutvarkyta: </strong>{{ order.due_back|date:"Y-m-d, f:m" }} val</li>
