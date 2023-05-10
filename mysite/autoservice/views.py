@@ -13,7 +13,7 @@ from django.views.generic.edit import FormMixin
 from .forms import OrderReviewForm
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
-from django.views.generic import (ListView, DetailView, CreateView, UpdateView)
+from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 # Create your views here.
@@ -122,6 +122,16 @@ class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.client = self.request.user
         return super().form_valid(form)
+
+    def test_func(self):
+        order = self.get_object()
+        return self.request.user == order.client
+
+
+class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Order
+    success_url = "/autoservice/my_orders/"
+    template_name = 'my_order_delete.html'
 
     def test_func(self):
         order = self.get_object()
