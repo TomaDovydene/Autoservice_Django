@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
 from django.contrib.auth.mixins import UserPassesTestMixin
+from .forms import OrderCreateUpdateForm
 
 # Create your views here.
 def index(request):
@@ -104,9 +105,10 @@ class ClientOrdersListView(LoginRequiredMixin, generic.ListView):
 
 class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
-    fields = ['vehicle', 'due_back']
+    # fields = ['vehicle', 'due_back']
     success_url = "/autoservice/my_orders/"
     template_name = 'my_order_form.html'
+    form_class = OrderCreateUpdateForm
 
     def form_valid(self, form):
         form.instance.client = self.request.user
@@ -115,9 +117,10 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
 
 class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Order
-    fields = ['vehicle', 'due_back']
+    # fields = ['vehicle', 'due_back']
     success_url = "/autoservice/my_orders/"
     template_name = 'my_order_form.html'
+    form_class = OrderCreateUpdateForm
 
     def form_valid(self, form):
         form.instance.client = self.request.user
