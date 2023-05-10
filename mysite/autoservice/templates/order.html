@@ -32,6 +32,12 @@
 <hr>
 <p><strong>Bendra suma: </strong>{{ order.total }} $</p>
 <br>
+{% if order.client == user %}
+    <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my_order_update' object.id %}">Redaguoti</a>
+    </div>
+    {% endif %}
+<br>
   <h4>Atsiliepimai</h4>
 
   {% if user.is_authenticated %}

@@ -13,5 +13,6 @@ urlpatterns = [
     path('my_orders/', views.ClientOrdersListView.as_view(), name='my_orders'),
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
-    path('my_orders/new', views.OrderCreateView.as_view(), name='my_new_order')
+    path('my_orders/new', views.OrderCreateView.as_view(), name='my_new_order'),
+    path('my_orders/<int:pk>/update', views.OrderUpdateView.as_view(), name='my_order_update'),
 ]
