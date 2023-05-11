@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse
-from . models import Service, Order, Vehicle
+from .models import Service, Order, Vehicle, OrderLine
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -13,9 +13,10 @@ from django.views.generic.edit import FormMixin
 from .forms import OrderReviewForm
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
-from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
+from django.views.generic import (CreateView, UpdateView, DeleteView)
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .forms import OrderCreateUpdateForm
+
 
 # Create your views here.
 def index(request):
@@ -35,6 +36,7 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
+
 def vehicles(request):
     paginator = Paginator(Vehicle.objects.all(), 2)
     page_number = request.GET.get('page')
@@ -44,6 +46,7 @@ def vehicles(request):
         'vehicles': vehicles,
     }
     return render(request, 'vehicles.html', context=context)
+
 
 def vehicle(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
@@ -61,8 +64,11 @@ def search(request):
     didžiosios/mažosios.
     """
     query = request.GET.get('query')
-    search_results = Vehicle.objects.filter(Q(owner_name__icontains=query) | Q(vehicle_model__make__icontains=query) | Q(vehicle_model__model__icontains=query) | Q(plate__icontains=query) | Q(vin__icontains=query))
+    search_results = Vehicle.objects.filter(
+        Q(owner_name__icontains=query) | Q(vehicle_model__make__icontains=query) | Q(
+            vehicle_model__model__icontains=query) | Q(plate__icontains=query) | Q(vin__icontains=query))
     return render(request, 'search.html', {'vehicles': search_results, 'query': query})
+
 
 class OrderListView(generic.ListView):
     model = Order
@@ -93,6 +99,7 @@ class OrderDetailView(LoginRequiredMixin, FormMixin, generic.DetailView):
         form.instance.reviewer = self.request.user
         form.save()
         return super(OrderDetailView, self).form_valid(form)
+
 
 class ClientOrdersListView(LoginRequiredMixin, generic.ListView):
     model = Order
@@ -139,6 +146,52 @@ class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         order = self.get_object()
         return self.request.user == order.client
+
+
+class OrderLineCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = OrderLine
+    fields = ['service', 'quantity']
+    template_name = 'my_orderline_form.html'
+
+    def get_success_url(self):
+        return reverse('order', kwargs={'pk': self.kwargs['pk']})
+    def form_valid(self, form):
+        form.instance.order = Order.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def test_func(self):
+        order = Order.objects.get(pk=self.kwargs['pk'])
+        return self.request.user == order.client
+
+
+class OrderLineUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = OrderLine
+    fields = ['service', 'quantity']
+    template_name = 'my_orderline_form.html'
+
+    def form_valid(self, form):
+        form.instance.order = Order.objects.get(pk=self.kwargs['order_id'])
+        return super().form_valid(form)
+
+    def test_func(self):
+        order = Order.objects.get(pk=self.kwargs['order_id'])
+        return self.request.user == order.client
+
+    def get_success_url(self):
+        return reverse('order', kwargs={'pk': self.kwargs['order_id']})
+
+
+class OrderLineDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = OrderLine
+    template_name = 'my_orderline_delete.html'
+    context_object_name = 'orderline'
+
+    def test_func(self):
+        order = Order.objects.get(pk=self.kwargs['order_id'])
+        return self.request.user == order.client
+
+    def get_success_url(self):
+        return reverse('order', kwargs={'pk': self.kwargs['order_id']})
 
 
 @csrf_protect
@@ -190,4 +243,3 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, 'profile.html', context)
-
