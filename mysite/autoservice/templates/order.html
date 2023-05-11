@@ -34,10 +34,10 @@
 <h2>Užsakymų eilutes:</h2>
 <ul>
     {% for orderline in order.orderlines.all %}
-    <li>{{ orderline.service}} ({{ orderline.service.price}} $) - {{ orderline.quantity}} vnt. = {{ orderline.sum}} $</li>
+    <li>{{ orderline.service}} ({{ orderline.service.price}} $) - {{ orderline.quantity}} vnt. = {{ orderline.sum}} $
     {% if order.client == user %}
         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'order_updateline' order.id orderline.id %}">Redaguoti eilutę</a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'order_deleteline' order.id orderline.id %}">Ištrinti eilutę</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'order_deleteline' order.id orderline.id %}">Ištrinti eilutę</a></li>
     {% endif %}
     {% endfor %}
 </ul>
